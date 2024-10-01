@@ -14,7 +14,7 @@ const HazardMap = () => {
     // XMLデータを取得して解析
     const fetchXMLData = async () => {
       try {
-        const response = await axios.get('https://disaportaldata.gsi.go.jp/raster/01_flood_l2_shinsuishin/Capabilities.xml'); //適切なエンドポイントのurlを入力
+        const response = await axios.get('https://disaportal.gsi.go.jp/hazardmapportal/hazardmap/copyright/metadata_light.xml');
         const parsedLayers = parseXML(response.data);
         setLayers(parsedLayers);
       } catch (error) {
@@ -31,15 +31,15 @@ const HazardMap = () => {
         <BaseLayer checked name="OpenStreetMap">
           <TileLayer
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            attribution='&copy; OpenStreetMap contributors'
           />
         </BaseLayer>
-        {layers.map((layer) => (
-          <Overlay key={layer.identifier} name={layer.title}>
+        {layers.map((layer, index) => (
+          <Overlay key={index} name={layer.title}>
             <TileLayer
               url={layer.resourceURL.replace('{TileMatrix}', '{z}').replace('{TileCol}', '{x}').replace('{TileRow}', '{y}')}
               attribution={layer.title}
-              opacity={0.6} // ハザードマップの透明度を調整
+              opacity={0.6}
             />
           </Overlay>
         ))}
