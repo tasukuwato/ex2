@@ -1,7 +1,5 @@
 // src/App.js
 
-// あああああああああ
-
 import React from 'react';
 import HazardMap from './components/Map';
 
